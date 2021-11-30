@@ -5,7 +5,7 @@ include('database.php');
 
 
 
-$sql = "SELECT * FROM kunden WHERE id = ".$_GET['id'];  
+$sql = "SELECT * FROM kunden WHERE id = ".$_GET['id']."";  
 $result = mysqli_query($conn, $sql);
 
 if(mysqli_num_rows($result) > 0){

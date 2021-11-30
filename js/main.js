@@ -157,37 +157,44 @@ var margin_casestudies = $(".casestudies_dropdown").css("margin-top");
 
       /************** START TIMER ***************/
       $("[id^=start_timer]").click(function(){
+        
+        dataString = $(this).attr("data-button") + $(this).attr("data-action");
 
-        dataString = "id=" + $(this).attr("value");
+        $("#stop_timer_"+$(this).attr("value")).css('display','block');    
+        $(this).css('display','none');
+            
         $.ajax({
           type: "POST",
           url: "set_timer.php",
-          data:dataString,
+          data: dataString,
           success: function(result){
             ajax_count++;
-            $("#projects_table").append(result);
+            $("#timer_container").append(result);        
           }
+          
         });
+
+
       });
 
+    if($('#db_start_time')){
+      var timer_id = $("#db_start_time").attr("data-id");
+      $("#start_timer_"+timer_id).attr("data-action", "&action=auto");
+      $("#start_timer_"+timer_id).click();
+    }
 
  });  
 
 
-      function secondsToDhms(seconds) {
-        seconds = Number(seconds);
-        var d = Math.floor(seconds / (3600*24));
-        var h = Math.floor(seconds % (3600*24) / 3600);
-        var m = Math.floor(seconds % 3600 / 60);
-        var s = Math.floor(seconds % 60);
-
-        var dDisplay = d > 0 ? d + (d == 1 ? " d, " : " d, ") : "";
-        var hDisplay = h > 0 ? h + (h == 1 ? " h, " : " h, ") : "";
-        var mDisplay = m > 0 ? m + (m == 1 ? " m, " : " m, ") : "";
-        var sDisplay = s > 0 ? s + (s == 1 ? " s" : " s") : "";
-        return dDisplay + hDisplay + mDisplay + sDisplay;
-      }
-
+  function secondsToDhms(s) {
+      var fm = [
+                        Math.floor(Math.floor(Math.floor(s/60)/60)/24)%24,      //DAYS
+                        Math.floor(Math.floor(s/60)/60)%60,                          //HOURS
+                        Math.floor(s/60)%60,                                                //MINUTES
+                        s%60                                                                      //SECONDS
+                  ];
+      return $.map(fm,function(v,i) { return ( (v < 10) ? '0' : '' ) + v; }).join( ':' );
+  }
 
 
 </script>

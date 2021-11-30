@@ -47,7 +47,7 @@
 
 
   <div id="navbar">
-    <div class="nav_li"><a href="index.php">Kunden</a></div>
+    <div class="nav_li"><a href="index.php?page=kunden">Kunden</a></div>
     <div class="nav_li"><a href="index.php?page=projects">Aufträge</a></div>
     <div class="nav_li"><a href="#">Dokumente</a></div>
     <div class="nav_li"><a href="about.php">EÜR</a></div>

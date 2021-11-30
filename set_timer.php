@@ -1,47 +1,73 @@
+<?php
+include "database.php";
+$id = $_REQUEST['id'];
 
-// style fullscreen overlay timer with button to stop and current customer name and position
+include('secondstohuman.php');
+include('calc_time_diff.php');
 
-<div id="stopWatch"></div>
-<div id="stop_timer">Stop</div>
+$worked_hours = calc_time_diff($id);
 
+
+if($_REQUEST['action'] != "auto"){
+    $timestamp = time();
+    $sql = "INSERT INTO timetable (position_id,start_date) VALUES ('{$_REQUEST[id]}','{$timestamp}')";
+
+    if (mysqli_query($conn, $sql)) {}
+}
+
+?>
+<div class="timer_large">
+	<div class="timer_company"><b><?php echo $_REQUEST['company']; ?></b></div>
+    <div class="timer_company"><b><?php echo $_REQUEST['project']; ?></b></div>
+    <div id="start_date" data-time="<?php echo $worked_hours; ?>">Bereits geleistet: <b><?php echo seconds2human($worked_hours); ?></b></div>
+    <div class="timer_display_desc">Aktuelle Zeit:</div>
+	<div class="timer_display" id="stopWatch">00:00:00:01</div>
+	<btn id="stop_timer">Stop</btn>
+</div>
 <script>
-var counter = null;
-var time = 0;
-var date = new Date();
 
+var counter = null;
+var time = 1;
+var date = new Date();
+var start_date = $("#start_date").attr("data-time");
 
 function start() {
     counter = setInterval(function () {
+        if(start_date)
+            var temp = start_date + time;
+        else
+            var temp = time;
 
-    	// for when the site is reloaded the script gets start date from db and counts elapsed seconds
-    	// get start date from database
-    	//if row for $_REQUEST['id'] has no stop date but start date
-
-
-	    //write current date as start date in database in seconds
-	    // if there is no start date
-
-    	// format date from db (if already started) and start timer from there on to show actual working time
-        $("#stopWatch").html((secondsToDhms(date.getTime() / 1000 + time)));
+        $("#stopWatch").html(
+            secondsToDhms(parseInt(parseInt(time))));
+        console.log(start_date);
         time++;
     }, 1000);
-
 }
 
-$("#stop_timer").click(function () {
-	console.log('start: ' + date)
-	console.log(secondsToDhms(time));
-	console.log('stop: ' + new Date(date.setSeconds(date.getSeconds() + time)).toUTCString())	
 
-	//write current date as stop date in database in seconds
+$("[id^=stop_timer]").click(function () {
+	var position_id = <?php echo $_REQUEST['id']; ?>;
+$.ajax({
+    type: 'POST',
+    url: 'write_time.php',
+    data: {action: start,
+    	id: position_id},
+    success: function (data) {
+      $("#timer_container").empty();
+      console.log(data);
+      clearInterval(counter);
+      counter = null;
+      //write current date as stop date in database in seconds
+
+      $("[id^=start_timer]").css('display','block');
+      $("[id^=stop_timer]").css('display','none');
+
+      $("#start_timer_"+position_id).attr("data-action","");
+    }
+});
 });
 
 start();
 
 </script>
-
-<?php
-	echo $_REQUEST['id'];
-
-
-?>

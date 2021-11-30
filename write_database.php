@@ -8,7 +8,7 @@ $errorMessage = 'Ups, da hat etwas nicht funktioniert.';
 if(count($_POST) == 0) throw new \Exception('Form is empty');
 
 $id = $_REQUEST['id'];
-$company = $_REQUEST['company'];
+$company_name = $_REQUEST['company'];
 $name = $_REQUEST['name'];
 $surname = $_REQUEST['surname'];
 $street = $_REQUEST['street'];
@@ -48,12 +48,12 @@ if (!$conn) {
 
 
 if($new_customer == 'new'){
-    $sql = "INSERT INTO kunden (company,name,surname,street,street_ext,city,email,phone,memos) VALUES ('{$company}','{$name}','{$surname}','{$street}','{$street_ext}','{$city}','{$email}','{$phone}','{$memos}')";
+    $sql = "INSERT INTO kunden (company,name,surname,street,street_ext,city,email,phone,memos) VALUES ('{$company_name}','{$name}','{$surname}','{$street}','{$street_ext}','{$city}','{$email}','{$phone}','{$memos}')";
 }if($new_project == 'new'){
     $sql = "INSERT INTO projects (project,company_id,start_date,deadline,hours,price,memos) VALUES ('{$project}','{$company}','{$start_date}','{$deadline}','{$est_time_all}','','{$memos}')";
 }else{
     $sql = "UPDATE kunden SET
-    company = '{$company}',
+    company = '{$company_name}',
     name = '{$name}',
     surname = '{$surname}',
     street = '{$street}',

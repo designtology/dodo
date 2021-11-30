@@ -12,7 +12,7 @@
 if($_GET["page"]){
 	$page = $_GET["page"];
 }else{
-	$page = "kunden";	
+	$page = "projects";	
 }
 
 

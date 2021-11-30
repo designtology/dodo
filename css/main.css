@@ -499,6 +499,60 @@ a.linked_btn{
 /* ******************************** FONTS & COLORS */
 /* ******************************** */
 
+
+*[id^='stop_timer_']{
+  display: none;
+  background-color: red;
+}
+
+.timer_company{
+  font-size: 22px;
+  text-align: center;
+  padding: 20px 25px;
+  padding-top: 20px;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timer_display{
+  font-size: 36px;
+  text-align: center;
+  padding-top: 5px;
+}
+  
+.timer_display_desc{
+  text-align: center;
+  font-size: 18px;
+  padding-top:20px;
+}
+
+#start_date{
+  text-align: center;
+  padding: 10px 25px;
+}
+
+.timer_large{
+    position: fixed;
+    background-color: #152636;
+    width: 400px;
+    height: 360px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+#stop_timer{
+  height: 40px;
+  width: 336px;
+  font-size: 40px;
+}
+
+
+
+
+
 /* *******NAME OF THE SECTIONS SHOWN ON MOBILE PORTRAIT */
 .section_name,
 .version_name {
