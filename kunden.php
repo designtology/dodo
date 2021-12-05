@@ -7,7 +7,6 @@
 <table id="animalsTable" class="table table-striped table-bordered table-dark dataTable no-footer" role="grid" aria-describedby="animalsTable_info" style="width: 1093px;">
   <thead>
     <tr role="row">
-      <td class="sorting" data-order="asc" tabindex="0" rowspan="1" colspan="1" aria-label="Id" style="width: 50px;">Id</td>
       <td class="sorting" data-order="asc" tabindex="0" rowspan="1" colspan="1" aria-label="company" style="width: 150px;">Firma</td>
       <td class="sorting" data-order="asc" tabindex="0" rowspan="1" colspan="1" aria-label="name" style="width: 80px;">Vorname</td>
       <td class="sorting" data-order="asc" tabindex="0" rowspan="1" colspan="1" aria-label="surname" style="width: 80px;">Nachname</td>
@@ -48,7 +47,7 @@ if($action == 'delete_user'){
 }
 
 
-$sql = "SELECT * FROM kunden ORDER BY id asc";
+$sql = "SELECT * FROM kunden ORDER BY company asc";
 $result = mysqli_query($conn, $sql);
 
 if(mysqli_num_rows($result) > 0){
@@ -56,7 +55,6 @@ if(mysqli_num_rows($result) > 0){
 ?>
 
     <tr role="row">
-      <td><?php echo $row[0]; ?></td>
       <td><b><a href="index.php?page=kunden_view&id='<?php echo $row[0]; ?>'"><?php echo $row[1]; ?></a></b></td>
       <td><?php echo $row[2]; ?></td>
       <td><?php echo $row[3]; ?></td>

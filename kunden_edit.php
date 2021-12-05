@@ -31,7 +31,7 @@ if(mysqli_num_rows($result) > 0){
 
               <div class="form-group">
                 <label for="form_company">Firma</label>
-                <input id="form_company" type="text" name="company" value="<?php echo $row[1] ?>" class="form-control" placeholder="Firma" data-error="Company is required.">
+                <input id="form_company" type="text" name="company" value="<?php echo $row[1]; ?>" class="form-control" placeholder="Firma" data-error="Company is required.">
                 <div class="help-block with-errors"></div>
               </div>
 
@@ -41,13 +41,13 @@ if(mysqli_num_rows($result) > 0){
 
               <div class="form-group">
                 <label for="form_name">Vorname *</label>
-                <input id="form_name" type="text" name="name" value="<?php echo $row[2] ?>" class="form-control" placeholder="Max" required="required" data-error="Firstname is required.">
+                <input id="form_name" type="text" name="name" value="<?php echo $row[2]; ?>" class="form-control" placeholder="Max" required="required" data-error="Firstname is required.">
                 <div class="help-block with-errors"></div>
               </div>
 
               <div class="form-group">
                 <label for="form_lastname">Nachname *</label>
-                <input id="form_lastname" type="text" name="surname" value="<?php echo $row[3] ?>" class="form-control" placeholder="Mustermann" required="required" data-error="Lastname is required.">
+                <input id="form_lastname" type="text" name="surname" value="<?php echo $row[3]; ?>" class="form-control" placeholder="Mustermann" required="required" data-error="Lastname is required.">
                 <div class="help-block with-errors"></div>
               </div>
 
@@ -57,13 +57,13 @@ if(mysqli_num_rows($result) > 0){
 
               <div class="form-group">
                 <label for="form_street">Straße / Nr *</label>
-                <input id="form_street" type="text" name="street" value="<?php echo $row[4] ?>" class="form-control" placeholder="Musterstraße 11" required="required" data-error="Firstname is required.">
+                <input id="form_street" type="text" name="street" value="<?php echo $row[4]; ?>" class="form-control" placeholder="Musterstraße 11" required="required" data-error="Firstname is required.">
                 <div class="help-block with-errors"></div>
               </div>
 
               <div class="form-group">
                 <label for="form_city">PLZ / Stadt *</label>
-                <input id="form_city" type="text" name="city" value="<?php echo $row[6] ?>" class="form-control" placeholder="12345 Musterstadt" required="required" data-error="Lastname is required.">
+                <input id="form_city" type="text" name="city" value="<?php echo $row[6]; ?>" class="form-control" placeholder="12345 Musterstadt" required="required" data-error="Lastname is required.">
                 <div class="help-block with-errors"></div>
               </div>
 
@@ -73,7 +73,7 @@ if(mysqli_num_rows($result) > 0){
 
               <div class="form-group">
                 <label for="form_street_ext">Adresserweiterung</label>
-                <input id="form_street_ext" type="text" name="street_ext" value="<?php echo $row[5] ?>" class="form-control" placeholder="Musterstraße 11">
+                <input id="form_street_ext" type="text" name="street_ext" value="<?php echo $row[5]; ?>" class="form-control" placeholder="Musterstraße 11">
                 <div class="help-block with-errors"></div>
               </div>
 
@@ -90,13 +90,13 @@ if(mysqli_num_rows($result) > 0){
 
               <div class="form-group">
                 <label for="form_email">Email *</label>
-                <input id="form_email" type="email" name="email" value="<?php echo $row[7] ?>" class="form-control" placeholder="max@provider.de" required="required" data-error="Valid email is required.">
+                <input id="form_email" type="email" name="email" value="<?php echo $row[7]; ?>" class="form-control" placeholder="max@provider.de" required="required" data-error="Valid email is required.">
                 <div class="help-block with-errors"></div>
               </div>
 
               <div class="form-group">
                 <label for="form_phone">Telefon</label>
-                <input id="form_phone" type="tel" name="phone" value="<?php echo $row[8] ?>" class="form-control" placeholder="0123 456 798 0">
+                <input id="form_phone" type="tel" name="phone" value="<?php echo $row[8]; ?>" class="form-control" placeholder="0123 456 798 0">
                 <div class="help-block with-errors"></div>
               </div>
 
@@ -108,7 +108,7 @@ if(mysqli_num_rows($result) > 0){
             <div class="row">
               <div class="form-group">
                 <label form="form_memo">Memo</label>
-                <textarea id="form_memo" name="memo" value="" class="form-control" placeholder="Kundenmemos ..." rows="5"><?php echo $row[9] ?></textarea>
+                <textarea id="form_memo" name="memo" value="" class="form-control" placeholder="Kundenmemos ..." rows="5"><?php echo $row[9]; ?></textarea>
                 <div class="help-block with-errors"></div>
               </div>
             </div>
@@ -120,7 +120,8 @@ if(mysqli_num_rows($result) > 0){
             </div>               
 
             <div class="row">
-              <button type="submit" class="btn btn-send btn-block disabled" value="Send message">Speichern</button><br><br><a href="index.php?page=kunden&action=delete_user&id=<?php echo $row[0]; ?>" onclick="return confirm('<?php echo $row[1]; ?> für immer löschen?')">Kunden löschen</a>
+              <button type="submit" class="btn btn-send btn-block disabled" value="Send message">Speichern</button><br><br>
+              <a href="index.php?page=kunden&action=delete_user&id=<?php echo $row[0]; ?>" onclick="return confirm('<?php echo $row[1]; ?> für immer löschen?')">Kunden löschen</a>
 
             </div>     
 
@@ -134,6 +135,7 @@ if(mysqli_num_rows($result) > 0){
           </div>
 
            <input type="hidden" name="id" value="<?php echo $row[0]; ?>">
+           <input type="hidden" name="action" value="edit_customer">
 
         </form>
 

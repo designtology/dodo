@@ -13,7 +13,7 @@
     </div>
 
     <div class="footer_links">
-    	<a href="www.crosscreations.de">crosscreations.de</a>
+    	<a href="http://www.crosscreations.de" target="_blank">crosscreations.de</a>
     </div>
 
 

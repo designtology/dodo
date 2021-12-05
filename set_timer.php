@@ -15,6 +15,8 @@ if($_REQUEST['action'] != "auto"){
     if (mysqli_query($conn, $sql)) {}
 }
 
+// THIS SHOULD NOT REQUEST COMPANY OR PROJECT NAMES RATHER THAN GET IT FROM SQL QUERY
+
 ?>
 <div class="timer_large">
 	<div class="timer_company"><b><?php echo $_REQUEST['company']; ?></b></div>

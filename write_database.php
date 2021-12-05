@@ -24,22 +24,27 @@ $company = $_REQUEST['form_company'];
 $start_date = $_REQUEST['form_start'];
 $deadline = $_REQUEST['form_deadline'];
 $hours = $_REQUEST['form_hours'];
-
-$project_count = $_REQUEST['project_positions'];
-
+$position_count = $_REQUEST['project_positions'];
 
 
-for($i=1;$i<=$project_count;$i++){
-   $position[$i] =  $_REQUEST['form_position_' . $i];
-   $priceclass[$i] =  $_REQUEST['form_priceclass_' . $i];
-   $est_time[$i] =  $_REQUEST['form_est_hours_' . $i];
-
-   $est_time_all += $est_time[$i];
+for($i=1;$i<=$position_count;$i++){
+    $position_id[$i]=$_REQUEST['position_id_'.$i];
+    $position_name[$i]=$_REQUEST['position_name_'.$i];
+    $position_hours[$i]=$_REQUEST['position_hours_'.$i];
+    $form_priceclass[$i]=$_REQUEST['form_priceclass_'.$i];
+    $worked_hours[$i]=$_REQUEST['hours_worked_'.$i];
+    $form_status[$i] = $_REQUEST['form_status_'.$i];
+    $position[$i] =  $_REQUEST['form_position_' . $i];
+    $priceclass[$i] =  $_REQUEST['form_priceclass_' . $i];
+    $est_time[$i] =  $_REQUEST['form_est_hours_' . $i];
+    $total_prices[$i] = $_REQUEST['total_price_' . $i];
+    $total_price+=$total_prices[$i];
+    $est_time_all += $est_time[$i];
 }
+$action = $_REQUEST['action'];
 
-$est_time_all += $est_time_1;
 
-include 'database.php';
+require_once 'database.php';
 
 // Check connection
 if (!$conn) {
@@ -47,22 +52,66 @@ if (!$conn) {
 }
 
 
+
+
 if($new_customer == 'new'){
     $sql = "INSERT INTO kunden (company,name,surname,street,street_ext,city,email,phone,memos) VALUES ('{$company_name}','{$name}','{$surname}','{$street}','{$street_ext}','{$city}','{$email}','{$phone}','{$memos}')";
 }if($new_project == 'new'){
-    $sql = "INSERT INTO projects (project,company_id,start_date,deadline,hours,price,memos) VALUES ('{$project}','{$company}','{$start_date}','{$deadline}','{$est_time_all}','','{$memos}')";
-}else{
-    $sql = "UPDATE kunden SET
-    company = '{$company_name}',
-    name = '{$name}',
-    surname = '{$surname}',
-    street = '{$street}',
-    street_ext = '{$street_ext}',
-    city = '{$city}',
-    email = '{$email}',
-    phone = '{$phone}',
-    memos = '{$memos}' WHERE id = '{$id}'";
+    $sql = "INSERT INTO projects (active,project,company_id,start_date,deadline,hours,price,memos) VALUES ('true','{$project}','{$company}','{$start_date}','{$deadline}','{$est_time_all}','','{$memos}')";
 }
+
+switch($action){
+
+    case "edit_project":
+
+        $sql = "UPDATE projects SET
+        hours = '{$est_time_all}',
+        price = '{$total_price}',
+        start_date = '{$start_date}',
+        deadline = '{$deadline}' WHERE id = '{$id}'";
+        mysqli_query($conn, $sql_positions);
+
+        for($j=1;$j<=$position_count;$j++){
+            $positions_sql ="UPDATE positions SET
+            position_name = '{$position_name[$j]}',
+            position_hours = '{$est_time[$j]}',
+            priceclass = '{$form_priceclass[$j]}'
+            WHERE id = {$position_id[$j]}";
+
+            mysqli_query($conn, $positions_sql);
+
+            require_once('calc_time_diff.php');
+
+            if($form_status[$j] == 'true'){
+                require_once('secondstohuman.php');
+
+                $actual_hours = calc_time_diff($position_id[$j]);
+
+                $today = time();
+                $time_diff = $today + ($actual_hours - human2seconds($worked_hours[$j]));
+
+                $timetable_sql = "INSERT INTO timetable (position_id, start_date, end_date) VALUES ('{$position_id[$j]}','{$time_diff}','{$today}')";
+                mysqli_query($conn, $timetable_sql);                
+            }
+        }
+        
+    break;
+
+    case "edit_customer":
+            $sql = "UPDATE kunden SET
+            company = '{$company_name}',
+            name = '{$name}',
+            surname = '{$surname}',
+            street = '{$street}',
+            street_ext = '{$street_ext}',
+            city = '{$city}',
+            email = '{$email}',
+            phone = '{$phone}',
+            memos = '{$memos}' WHERE id = '{$id}'";
+    break;
+
+}
+
 
 if (mysqli_query($conn, $sql)) {
     $responseArray = array('type' => 'success', 'message' => $okMessage);
@@ -70,11 +119,12 @@ if (mysqli_query($conn, $sql)) {
     $responseArray = array('type' => 'danger', 'message' => $errorMessage);
 }
 
+
 $new_id = $conn->insert_id;
 
 if($new_project == 'new'){
 
-    for($j=1;$j<=$project_count;$j++){
+    for($j=1;$j<=$position_count;$j++){
         $positions_sql ="INSERT INTO positions (project_id, position_name, priceclass, position_hours) VALUES ('{$new_id}','{$position[$j]}','{$priceclass[$j]}','{$est_time[$j]}')";
         mysqli_query($conn, $positions_sql);
     }
@@ -92,6 +142,8 @@ if($new_project == 'new'){
         $sql_positions = "UPDATE projects SET price = '{$price}' WHERE id = {$project_id}";
         mysqli_query($conn, $sql_positions);
 }
+
+
 
 mysqli_close($conn);
 

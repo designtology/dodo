@@ -13,8 +13,8 @@ include 'database.php';
             if($row[end_date]){
                         $worked_hours += $row[end_date] - $row[start_date];
             }else{
-            $temp_date =  time();
-            $worked_hours = $temp_date - $row[start_date];
+            $today =  time();
+            $worked_hours = $today - $row[start_date];
             }
         }
     }

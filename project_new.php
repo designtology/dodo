@@ -16,7 +16,7 @@
               <div class="form-group">
                 <label for="form_project_name">Projektname</label>
 
-                <input id="form_project_name" type="text" name="form_project_name" class="form-control" placeholder="Projekt" data-error="Project is required.">
+                <input id="form_project_name" type="text" name="form_project_name" class="form-control" placeholder="Projekt" data-error="Project Name is required." required='required'>
                 <div class="help-block with-errors"></div>
               </div>
 
@@ -49,13 +49,13 @@
 
               <div class="form-group">
                 <label for="form_start">Startdatum</label>
-                <input id="form_start" type="date" name="form_start" class="form-control"  data-error="Startdate is required.">
+                <input id="form_start" type="date" name="form_start" class="form-control"  data-error="Startdate is required." required='required'>
                 <div class="help-block with-errors"></div>
               </div>
 
               <div class="form-group">
                 <label for="form_deadline">Deadline</label>
-                <input id="form_deadline" type="date" name="form_deadline" class="form-control"  data-error="Deadline is required.">
+                <input id="form_deadline" type="date" name="form_deadline" class="form-control" data-error="Deadline is required." required='required'>
                 <div class="help-block with-errors"></div>
               </div>
 
@@ -71,7 +71,7 @@
 
               <div>
                 <div class="form-group">
-                  <input id="form_position_1" type="text" name="form_position_1" class="form-control" placeholder="Musterstraße 11">
+                  <input id="form_position_1" type="text" name="form_position_1" class="form-control" placeholder="Musterstraße 11" data-error="Position Name is required." required='required'>
                   <div class="help-block with-errors"></div>
                 </div>
               </div>
@@ -85,7 +85,7 @@
                     $sql = "SELECT * FROM priceclass";
                     $result = mysqli_query($conn, $sql);
 
-                    echo "<select id ='form_priceclass_1' name='form_priceclass_1' class='form-control' required='required' data-error='Firstname is required.'>";
+                    echo "<select id ='form_priceclass_1' name='form_priceclass_1' class='form-control'>";
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<option value='" . $row['id'] . "'>" . $row['priceclass_name'] . "</option>";
                     }
@@ -98,7 +98,7 @@
 
                 <div class="form-group">
                   <label for="form_est_hours_1">Zeitschätzung</label>
-                  <input id="form_est_hours_1" type="text" name="form_est_hours_1" class="form-control" placeholder="Musterstraße 11">
+                  <input id="form_est_hours_1" type="text" name="form_est_hours_1" class="form-control" placeholder="Musterstraße 11" data-error="Time is required." required='required'>
                   <div class="help-block with-errors"></div>
                 </div>
               </div>

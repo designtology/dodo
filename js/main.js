@@ -168,7 +168,6 @@ var margin_casestudies = $(".casestudies_dropdown").css("margin-top");
           url: "set_timer.php",
           data: dataString,
           success: function(result){
-            ajax_count++;
             $("#timer_container").append(result);        
           }
           
@@ -177,21 +176,74 @@ var margin_casestudies = $(".casestudies_dropdown").css("margin-top");
 
       });
 
+      // ********************** DB Start Timer for autostart on page load **********************
+
     if($('#db_start_time')){
       var timer_id = $("#db_start_time").attr("data-id");
       $("#start_timer_"+timer_id).attr("data-action", "&action=auto");
       $("#start_timer_"+timer_id).click();
     }
 
- });  
+      // ********************** Calculate Price from Priceclass **********************
+
+
+    $("[id^=form_priceclass_]").change(function(){
+
+      var options_id = $(this).val();
+      var pos_id = $(this).attr('data-id');
+
+      calc_priceclass(options_id,pos_id);
+    });
+
+    $("[id^=position_hours_]").change(function(){
+      var pos_id = $(this).attr('data-id');
+      var options_id = $('#form_priceclass_'+pos_id).val();
+
+      calc_priceclass(options_id,pos_id);
+    });
+
+
+  var actual_value = "";
+
+  $("[id^=hours_worked_]").change(function(){
+    actual_value = $(this).attr('value');
+    console.log(actual_value);
+    var id = $(this).attr('data-id');
+    
+    if($('#form_status_'+id).attr('value') == "false" && actual_value != $(this).val()){
+
+      $('#form_status_'+id).attr('value', 'true');
+    }else if(actual_value == $(this).val()){
+      $('#form_status_'+id).attr('value', 'false');
+    }
+  });
+
+ });
+
+
+ function calc_priceclass(options_id,pos_id)  {
+      var hours = $('#position_hours_'+pos_id).val();
+      dataString = "id="+options_id;
+      $.ajax({
+                type: "POST",
+                url: "functions/calc_priceclass.php",
+                data: dataString,
+                success: function(result){
+                  var total = result * hours;
+                  $("#total_price_"+pos_id).attr('value', total.toFixed(2) + " €");
+
+                }
+                
+              });  
+ }
 
 
   function secondsToDhms(s) {
       var fm = [
                         Math.floor(Math.floor(Math.floor(s/60)/60)/24)%24,      //DAYS
-                        Math.floor(Math.floor(s/60)/60)%60,                          //HOURS
-                        Math.floor(s/60)%60,                                                //MINUTES
-                        s%60                                                                      //SECONDS
+                        Math.floor(Math.floor(s/60)/60)%60,                     //HOURS
+                        Math.floor(s/60)%60,                                    //MINUTES
+                        s%60                                                    //SECONDS
                   ];
       return $.map(fm,function(v,i) { return ( (v < 10) ? '0' : '' ) + v; }).join( ':' );
   }
