@@ -1,4 +1,4 @@
-
+<div class="title"><h2>Projekt bearbeiten</h2></div>
 
 
 <div class="container ">
@@ -15,8 +15,8 @@
 <?php
 
 include "database.php";
-require_once('secondstohuman.php');
-include('calc_time_diff.php');
+require_once('functions/secondstohuman.php');
+include('functions/calc_time_diff.php');
 
 $id = $_GET['id'];
 
@@ -73,34 +73,32 @@ if($show_title){
               </div>
 
               <div class="form-group">
-                <label>Stunden</label>
-              </div>
-
-              <div class="form-group">
                 <label>Preisklasse</label>
               </div>
 
               <div class="form-group">
-                <label>Geleistet</label>
+                <label>Stunden</label>
               </div>
 
               <div class="form-group">
                 <label>Gesamtpreis</label>
               </div>
-            </div>
-<?php
 
-$show_title = false;
-
-
- } ?>
-            <div class="form_table_row">
               <div class="form-group">
-                <textarea id="position_name_<?php echo $row[id]; ?>" name="position_name_<?php echo $counter; ?>" class="form-control" required="required" data-error="" ><?php echo $row[position_name] ?></textarea>
+                <label>Geleistet</label>
               </div>
+            </div>
+            <div id="positions">
+            <?php
 
+            $show_title = false;
+
+
+             } ?>
+
+            <div class="form_table_row" id="position_row_<?php echo $row[id]; ?>">
               <div class="form-group">
-                <input id="position_hours_<?php echo $row[id]; ?>" type="number"  step="0.25" name="form_est_hours_<?php echo $counter; ?>" value="<?php echo $row[position_hours]; ?>" class="form-control" data-id="<?php echo $row[id]; ?>">
+                <textarea id="position_name_<?php echo $row[id]; ?>" name="position_name_<?php echo $counter; ?>" class="form-control" required="required" data-error="" ><?php echo $row[position_name]; ?></textarea>
               </div>
 
               <div class="form-group">
@@ -128,9 +126,7 @@ $show_title = false;
               </div>
 
               <div class="form-group">
-                <input id="hours_worked_<?php echo $row[id]; ?>" type="text" name="hours_worked_<?php echo $counter; ?>" value="<?php echo seconds2human(calc_time_diff($positions_id)); ?>" class="form-control" data-id="<?php echo $row[id]; ?>">
-                <input type="hidden" id="form_status_<?php echo $row[id]; ?>" name="form_status_<?php echo $counter; ?>" value="false">
-                <div class="help-block with-errors"></div>
+                <input id="position_hours_<?php echo $row[id]; ?>" type="number"  step="0.25" name="form_est_hours_<?php echo $counter; ?>" value="<?php echo $row[position_hours]; ?>" class="form-control" data-id="<?php echo $row[id]; ?>">
               </div>
 
               <div class="form-group">
@@ -138,19 +134,29 @@ $show_title = false;
                 <input type="hidden" name="position_id_<?php echo $counter; ?>" value="<?php echo $row[id]; ?>">
                 <div class="help-block with-errors"></div>
               </div>              
+
+              <div class="form-group">
+                <input id="hours_worked_<?php echo $row[id]; ?>" type="text" name="hours_worked_<?php echo $counter; ?>" value="<?php echo seconds2human(calc_time_diff($positions_id)); ?>" class="form-control" data-id="<?php echo $row[id]; ?>">
+                <input type="hidden" id="form_status_<?php echo $row[id]; ?>" name="form_status_<?php echo $counter; ?>" value="false">
+                <a  class="btn_delete" id="<?php echo $row[id]; ?>">Delete</a>                
+                <div class="help-block with-errors"></div>
+              </div>
             </div>
-<?php
+                <input type="hidden" name="delete_pos_<?php echo $counter; ?>" id="delete_pos_<?php echo $row[id]; ?>" value="">
+            <?php
 
-$hours_all += $row[position_hours];
-$hours_worked_all += calc_time_diff($row[id]);
-$price_all += $row[position_hours] * $row[rate];
-$memos = $row[memos];
-
+            $hours_all += $row[position_hours];
+            $hours_worked_all += calc_time_diff($row[id]);
+            $price_all += $row[position_hours] * $row[rate];
+            $memos = $row[memos];            
+    }
   }
+            ?>
+</div>
+            <div class="row">
+              <btn id="add_position_form" class="btn_add_position">Neue Position</button>
+            </div>
 
-}
-
-?>
             <div class="form_table_row form_table_last_row">
               <div class="form-group">
                 &nbsp;
@@ -176,7 +182,7 @@ $memos = $row[memos];
             <div class="row">
               <div class="form-group">
                 <label form="form_memo">Memo</label>
-                <textarea id="form_memo" name="memos" value="" class="form-control" rows="5"><?php echo $memos; ?></textarea>
+                <textarea id="form_memo" name="memo" value="" class="form-control" rows="5"><?php echo $memos; ?></textarea>
                 <div class="help-block with-errors"></div>
               </div>
             </div>
@@ -189,7 +195,7 @@ $memos = $row[memos];
 
             <div class="row">
               <button type="submit" class="btn btn-send btn-block disabled" value="Send message">Speichern</button><br><br>
-              <a href="index.php?page=projects&action=delete_project&id=<?php echo $row[0]; ?>" onclick="return confirm('<?php echo $row[1]; ?> für immer löschen?')">Projekt löschen</a>
+              <a id="delete_project" data-id="<?php echo $id; ?>">Projekt löschen</a>
             </div>
 
 
@@ -197,7 +203,8 @@ $memos = $row[memos];
 
            <input type="hidden" name="id" value="<?php echo $id; ?>">
            <input type="hidden" name="action" value="edit_project">
-           <input type="hidden" id="project_positions" name="project_positions" value="<?php echo $counter ?>">
+           <input type="hidden" name ="new_position_counter" id="new_position_counter" value="<?php echo $counter; ?>">
+           <input type="hidden" id="project_positions" name="project_positions" value="<?php echo $counter; ?>">
         </form>
 
   </div>

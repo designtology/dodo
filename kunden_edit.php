@@ -1,3 +1,4 @@
+<div class="title"><h2>Kunde bearbeiten</h2></div>
 
 <?php
 

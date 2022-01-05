@@ -6,7 +6,7 @@
  <hr></hr>
               <div>
                 <div class="form-group">
-                  <input id="form_position_<?php echo $count; ?>" type="text" name="form_position_<?php echo $count; ?>" class="form-control" placeholder="Musterstraße 11">
+                  <input id="position_name_<?php echo $count; ?>" type="text" name="position_name_<?php echo $count; ?>" class="form-control" placeholder="Musterstraße 11">
                   <div class="help-block with-errors"></div>
                 </div>
               </div>
@@ -33,7 +33,7 @@
 
                 <div class="form-group">
                   <label for="form_est_hours_<?php echo $count; ?>">Zeitschätzung</label>
-                  <input id="form_est_hours_<?php echo $count; ?>" type="text" name="form_est_hours_<?php echo $count; ?>" class="form-control" placeholder="Musterstraße 11">
+                  <input id="form_est_hours_<?php echo $count; ?>"  type="number" step="0.25" name="form_est_hours_<?php echo $count; ?>" class="form-control" placeholder="Musterstraße 11">
                   <div class="help-block with-errors"></div>
                 </div>
               </div>

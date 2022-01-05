@@ -1,5 +1,5 @@
 <?php
-include "database.php";
+include "../database.php";
 $id = $_REQUEST['id'];
 
 include('secondstohuman.php');
@@ -50,24 +50,25 @@ function start() {
 
 $("[id^=stop_timer]").click(function () {
 	var position_id = <?php echo $_REQUEST['id']; ?>;
-$.ajax({
-    type: 'POST',
-    url: 'write_time.php',
-    data: {action: start,
-    	id: position_id},
-    success: function (data) {
-      $("#timer_container").empty();
-      console.log(data);
-      clearInterval(counter);
-      counter = null;
-      //write current date as stop date in database in seconds
+    
+    $.ajax({
+        type: 'POST',
+        url: 'functions/write_time.php',
+        data: {action: start,
+        	id: position_id},
+        success: function (data) {
+          $("#timer_container").empty();
+          console.log(data);
+          clearInterval(counter);
+          counter = null;
+          //write current date as stop date in database in seconds
 
-      $("[id^=start_timer]").css('display','block');
-      $("[id^=stop_timer]").css('display','none');
+          $("[id^=start_timer]").css('display','block');
+          $("[id^=stop_timer]").css('display','none');
 
-      $("#start_timer_"+position_id).attr("data-action","");
-    }
-});
+          $("#start_timer_"+position_id).attr("data-action","");
+        }
+    });
 });
 
 start();

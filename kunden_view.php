@@ -15,6 +15,7 @@ if(mysqli_num_rows($result) > 0){
 }
 
 ?>
+<div class="title"><h2>Kunde</h2></div>
 
 
 <div class="container ">

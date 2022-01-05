@@ -1,3 +1,5 @@
+<div class="title"><h2>Kunden</h2></div>
+
 <div class="container">
   <div class="wrapper" id="kundentabelle">
 
@@ -37,12 +39,11 @@ if($action == 'delete_user'){
 
 
   if (mysqli_query($conn, $sql)) {
-      echo "user eleted";
+      echo "user deleted";
   } else {
       echo "not deleted";
   }
 
-  mysqli_close($conn);
 
 }
 

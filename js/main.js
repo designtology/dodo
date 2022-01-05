@@ -124,7 +124,7 @@ var margin_casestudies = $(".casestudies_dropdown").css("margin-top");
            }  
 
            $.ajax({  
-                url:"sort.php",  
+                url:"functions/sort.php",  
                 method:"POST",  
                 data:{column_name:column_name, order:order},  
                 success:function(data)  
@@ -138,6 +138,10 @@ var margin_casestudies = $(".casestudies_dropdown").css("margin-top");
       /*********  ADD POSITION FORM *********/
       var ajax_count = 1;
 
+      if($('#new_position_counter').attr('value')){
+        ajax_count = $('#new_position_counter').attr('value');
+      }
+
       $("#add_position_form").click(function(){
         //var count = <?php echo $count++; ?>,
         dataString = "count=" + ajax_count;
@@ -148,9 +152,12 @@ var margin_casestudies = $(".casestudies_dropdown").css("margin-top");
           success: function(result){
             ajax_count++;
             $("#positions").append(result);
+
             if($('#project_positions')){
               $('#project_positions').attr('value', ajax_count);
             }
+
+
           }
         });
       });
@@ -165,7 +172,7 @@ var margin_casestudies = $(".casestudies_dropdown").css("margin-top");
             
         $.ajax({
           type: "POST",
-          url: "set_timer.php",
+          url: "functions/set_timer.php",
           data: dataString,
           success: function(result){
             $("#timer_container").append(result);        
@@ -218,11 +225,53 @@ var margin_casestudies = $(".casestudies_dropdown").css("margin-top");
     }
   });
 
+  $('#delete_project').click(function(){
+    if(confirm('Dieses Projekt für immer löschen?')){
+      dataString = "id="+$(this).attr('data-id');
+      $.ajax({
+                type: "POST",
+                url: "functions/project_delete.php",
+                data: dataString,
+                success: function(result){
+                window.location = "index.php?page=projects";
+                }
+                
+              }); 
+    }
+  });
+
+
+  $('.btn_delete').click(function(){
+    if(confirm('Diese Position für immer löschen?')){
+      $('#delete_pos_'+$(this).attr('id')).attr('value',$(this).attr('id'));
+      $('#position_row_'+$(this).attr('id')).remove();
+    }
+  });
+
+  
+
  });
 
 
+function create_invoice(){
+  var action = confirm('Rechnungs wirklich erstellen?');
+
+  if(action == true){
+    if($('#pos_price').val() <= 0){
+      alert("There is nothing to charge.");
+
+      return false;
+    }
+
+    return true;
+  }else{
+    return false;
+  }
+
+}
+
  function calc_priceclass(options_id,pos_id)  {
-      var hours = $('#position_hours_'+pos_id).val();
+      if('#position_hours_'+pos_id){var hours = $('#position_hours_'+pos_id).val();}
       dataString = "id="+options_id;
       $.ajax({
                 type: "POST",

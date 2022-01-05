@@ -1,5 +1,5 @@
 <?php include('database.php'); ?>
-
+<div class="title"><h2>Neues Projekte</h2></div>
 
 <div class="container">
   <div class="wrapper">
@@ -71,7 +71,7 @@
 
               <div>
                 <div class="form-group">
-                  <input id="form_position_1" type="text" name="form_position_1" class="form-control" placeholder="Musterstraße 11" data-error="Position Name is required." required='required'>
+                  <input id="position_name_1" type="text" name="position_name_1" class="form-control" placeholder="Musterstraße 11" data-error="Position Name is required." required='required'>
                   <div class="help-block with-errors"></div>
                 </div>
               </div>
@@ -98,14 +98,14 @@
 
                 <div class="form-group">
                   <label for="form_est_hours_1">Zeitschätzung</label>
-                  <input id="form_est_hours_1" type="text" name="form_est_hours_1" class="form-control" placeholder="Musterstraße 11" data-error="Time is required." required='required'>
+                  <input id="form_est_hours_1" type="number" step="0.25" name="form_est_hours_1" class="form-control" placeholder="Musterstraße 11" data-error="Time is required." required='required'>
                   <div class="help-block with-errors"></div>
                 </div>
               </div>
             </div>
 
             <div class="row">
-              <btn id="add_position_form">Neue Position</button>
+              <btn id="add_position_form" class="btn_add_position">Neue Position</button>
             </div>
 
             <div class="section_title">Weiteres</div>

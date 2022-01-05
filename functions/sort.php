@@ -1,5 +1,5 @@
  <?php  
-include 'database.php';
+include '../database.php';
 
  $output = '';  
  $order = $_POST["order"];  

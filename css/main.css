@@ -21,6 +21,7 @@ html {
 body{
   background-color: var(--dark-contrast);
   overflow: hidden;
+  min-height: 100%;
 }
 
 body, a, input, textarea, button {
@@ -346,11 +347,6 @@ ul{
   text-align: left;
 }
 
-.yellow_bg{
-  background-color: var(--secondary-color);
-  color: var(--dark-contrast);
-}
-
  ul {
   list-style-type: square;
   font-size: 14px;
@@ -546,9 +542,10 @@ a.linked_btn{
 }
 
 #stop_timer{
-  height: 40px;
-  width: 336px;
-  font-size: 40px;
+    height: 60px;
+    width: 100%;
+    box-sizing: border-box;  
+    font-size: 40px;
 }
 
 
@@ -620,8 +617,7 @@ a.linked_btn{
 }
 
 
-.leistungen .title,
-.core_values .title{
+.title{
   display: flex;
   flex-wrap: wrap;
   color: var(--light-contrast);
@@ -630,7 +626,7 @@ a.linked_btn{
   width: 100%;
   justify-content:center;
   align-items: start;
-  padding-bottom: 50px;  
+  padding: 20px 0;  
 }
   
 .core_values .wrapper > .iconbox{
@@ -765,6 +761,7 @@ p.menu{
   text-transform: uppercase;
   text-align: left;
   padding:25px 0;
+  padding-bottom: 50px;
 }
 
 .trenner_contact h2{
@@ -855,7 +852,8 @@ p.menu{
     background-color: var(--dark-contrast);
 }
 
-.yellow_bg{
+.yellow_bg,
+.yellow_bg .form-control{
     background-color: var(--secondary-color);
     color:var(--dark-contrast);
 }
@@ -1022,6 +1020,8 @@ a.external_link {
 .header {
   position: relative;
   width: 100vw;
+  height: 100px;
+  margin-top: -50px;
   z-index: 3;
 }
 
@@ -1641,11 +1641,15 @@ a[href="nowhere"]:focus {
 .scroll_wrapper {
 /*  -ms-scroll-snap-type: both proximity;
       scroll-snap-type: both proximity;*/
-  width: 100%;
-  height: 100vh;
-  overflow: auto;
-  position: fixed;
-  scroll-behavior: smooth;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding: 50px 0;
+    position: absolute;
+    top: 0;
+    bottom: 50px;
+    left: 0;
+    right: 0;
 }
 
 
@@ -1674,7 +1678,6 @@ a[href="nowhere"]:focus {
           -ms-flex-align: center;
       align-items: center;
   
-  padding: 100px 0;  
   width: 100%;
 }
 
@@ -2134,7 +2137,7 @@ button, btn {
   display: inline-block;
   font-weight: 500;
   font-size: 16px;
-  margin-top: 50px;
+  margin-top: 40px;
   cursor: pointer;
 }
 
@@ -2151,6 +2154,23 @@ button{
   padding: 0px 10px;
 }
 
+.btn_delete{
+    position: relative;
+    right: -200px;
+    top: -30px;
+}
+
+a.btn_delete{
+    color: red;
+}
+
+.btn_add_position{
+    width: 100%;
+    box-sizing: border-box;  
+    background-color: rgba(0,0,0,0);
+    color: var(--secondary-color); 
+    border: 1px solid var(--secondary-color); 
+}
 
 btn .insider {
   background-color: var(--light-contrast);
@@ -2681,6 +2701,21 @@ btn:hover .insider {
   margin: 0px;
 }
 
+.table_projects tr td:nth-child(6){
+  border-right: 15px solid #060e15;
+}
+
+
+.project_view_invoice_table{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+
 input.form_checkbox {
   height: 15px;
   width: auto;
@@ -2826,13 +2861,13 @@ input,select {
   display: -ms-flexbox;
   display: flex;
   height: 50px;  
+  position: fixed;
+  bottom: 0;
   text-align: center;
   -ms-flex-line-pack: center;
       align-content: center;
   padding: 15px 0px;
   flex-wrap: wrap;
-  position: absolute;
-  bottom: 0;
   background-color: var(--dark-contrast);
 }
 
@@ -3335,7 +3370,7 @@ h1,h2,h3,h4,h5,h6{
 /*    text-align: left;
 */  }
 
-  .core_values .title{
+  .title{
     padding-bottom: 0;
   }
 

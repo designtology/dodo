@@ -31,20 +31,19 @@ for($i=1;$i<=$position_count;$i++){
     $position_id[$i]=$_REQUEST['position_id_'.$i];
     $position_name[$i]=$_REQUEST['position_name_'.$i];
     $position_hours[$i]=$_REQUEST['position_hours_'.$i];
-    $form_priceclass[$i]=$_REQUEST['form_priceclass_'.$i];
     $worked_hours[$i]=$_REQUEST['hours_worked_'.$i];
     $form_status[$i] = $_REQUEST['form_status_'.$i];
-    $position[$i] =  $_REQUEST['form_position_' . $i];
     $priceclass[$i] =  $_REQUEST['form_priceclass_' . $i];
     $est_time[$i] =  $_REQUEST['form_est_hours_' . $i];
     $total_prices[$i] = $_REQUEST['total_price_' . $i];
+    $delete_pos[$i] = $_REQUEST['delete_pos_' . $i];
     $total_price+=$total_prices[$i];
     $est_time_all += $est_time[$i];
 }
 $action = $_REQUEST['action'];
 
 
-require_once 'database.php';
+require_once '../database.php';
 
 // Check connection
 if (!$conn) {
@@ -68,14 +67,15 @@ switch($action){
         hours = '{$est_time_all}',
         price = '{$total_price}',
         start_date = '{$start_date}',
-        deadline = '{$deadline}' WHERE id = '{$id}'";
+        deadline = '{$deadline}',
+        memos = '{$memos}' WHERE id = '{$id}'";
         mysqli_query($conn, $sql_positions);
 
         for($j=1;$j<=$position_count;$j++){
             $positions_sql ="UPDATE positions SET
             position_name = '{$position_name[$j]}',
             position_hours = '{$est_time[$j]}',
-            priceclass = '{$form_priceclass[$j]}'
+            priceclass = '{$priceclass[$j]}'
             WHERE id = {$position_id[$j]}";
 
             mysqli_query($conn, $positions_sql);
@@ -93,6 +93,17 @@ switch($action){
                 $timetable_sql = "INSERT INTO timetable (position_id, start_date, end_date) VALUES ('{$position_id[$j]}','{$time_diff}','{$today}')";
                 mysqli_query($conn, $timetable_sql);                
             }
+
+            if(isset($delete_pos[$j])){
+                $sql_delete_pos = "DELETE FROM positions WHERE id='{$delete_pos[$j]}'";
+                mysqli_query($conn, $sql_delete_pos);
+            }
+
+            if(isset($_REQUEST['new_position_counter']) && $j > $_REQUEST['new_position_counter']){
+                $sql_add_new_pos = "INSERT INTO positions (project_id, position_name, priceclass, position_hours) VALUES ('{$id}','{$position_name[$j]}','{$priceclass[$j]}','{$est_time[$j]}')";
+                mysqli_query($conn, $sql_add_new_pos);
+
+            }
         }
         
     break;
@@ -108,7 +119,7 @@ switch($action){
             email = '{$email}',
             phone = '{$phone}',
             memos = '{$memos}' WHERE id = '{$id}'";
-    break;
+    break;    
 
 }
 
@@ -125,7 +136,7 @@ $new_id = $conn->insert_id;
 if($new_project == 'new'){
 
     for($j=1;$j<=$position_count;$j++){
-        $positions_sql ="INSERT INTO positions (project_id, position_name, priceclass, position_hours) VALUES ('{$new_id}','{$position[$j]}','{$priceclass[$j]}','{$est_time[$j]}')";
+        $positions_sql ="INSERT INTO positions (project_id, position_name, priceclass, position_hours) VALUES ('{$new_id}','{$position_name[$j]}','{$priceclass[$j]}','{$est_time[$j]}')";
         mysqli_query($conn, $positions_sql);
     }
 

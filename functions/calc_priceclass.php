@@ -9,4 +9,5 @@
         while($row = mysqli_fetch_assoc($result2)){
                 echo $row[rate];
             }
-        }?>
+        }
+?>

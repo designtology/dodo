@@ -1,11 +1,7 @@
 <?php include('head.php') ?>
 
-<div class="background_scroll_wrapper">
-
-
-
-  	<div class="scroll_wrapper">
-
+<div class="scroll_wrapper">
+<?php include 'header.php'; ?>
 <?php 
 
 
@@ -21,7 +17,13 @@ include($page . ".php");
 
 ?>
 
-	</div>
+<?php include('footer.php') ?>
 </div>
 
-<?php include('footer.php') ?>
+
+
+<?php include 'js/main.js' ?>
+
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-
+<div class="title"><h2>Neuer Kunde</h2></div>
 
 
 <div class="container">

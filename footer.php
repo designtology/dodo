@@ -33,11 +33,3 @@
     Verstanden
   </button>
 </div>
-
-
-
-<?php include 'js/main.js' ?>
-
-</body>
-
-</html>

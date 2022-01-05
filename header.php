@@ -1,4 +1,3 @@
-<body>
 
 <div class="header">
 
@@ -30,7 +29,7 @@
           </ul>
         </li>        
         <li><a href="about.php">Über mich</a> </li>
-        <li><a href="contact.php">Kontakt</a> </li>        
+        <li><a href="contact.php">Kontakt</a> </li>
       </ul>
       <div class="mobile_menu_bottoms">
         <div class="mobile_submenu"><a href="datenschutz.php">Datenschutz</a></div>
@@ -48,7 +47,7 @@
 
   <div id="navbar">
     <div class="nav_li"><a href="index.php?page=kunden">Kunden</a></div>
-    <div class="nav_li"><a href="index.php?page=projects">Aufträge</a></div>
+    <div class="nav_li"><a href="index.php?page=projects">Projekte</a></div>
     <div class="nav_li"><a href="#">Dokumente</a></div>
     <div class="nav_li"><a href="about.php">EÜR</a></div>
   </div>  

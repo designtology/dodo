@@ -2,7 +2,7 @@ $(function() {
     $("#contact-form").validator(),
     $("#contact-form").on("submit", function(e) {
         if (!e.isDefaultPrevented()) {
-            var t = "write_database.php"
+            var t = "./functions/write_database.php"
             return $.ajax({
                 type: "POST",
                 url: t,
